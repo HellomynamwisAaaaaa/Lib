@@ -1,0 +1,138 @@
+-- Roblox GUI Library
+
+local lib = {}
+
+-- Function to add a button to the GUI
+
+function lib:AddButton(name, callback)
+
+    local button = Instance.new("TextButton")
+
+    button.Name = name
+
+    button.Text = name
+
+    button.Parent = -- Specify the parent GUI frame here
+
+    button.MouseButton1Click:Connect(function()
+
+        callback()
+
+    end)
+
+end
+
+-- Function to create a title label
+
+function lib:AddTitleLabel(name)
+
+    local label = Instance.new("TextLabel")
+
+    label.Name = name
+
+    label.Text = name
+
+    label.TextColor3 = Color3.new(1, 1, 1) -- Customize the text color
+
+    label.TextSize = 18 -- Customize the text size
+
+    label.Parent = -- Specify the parent GUI frame here
+
+    return label
+
+end
+
+-- Function to create a combo box
+
+function lib:AddComboBox(name, options, callback)
+
+    local comboBox = Instance.new("TextButton")
+
+    comboBox.Name = name
+
+    comboBox.Text = name
+
+    comboBox.Parent = -- Specify the parent GUI frame here
+
+    local dropdownFrame = Instance.new("Frame")
+
+    dropdownFrame.Name = "DropdownFrame"
+
+    dropdownFrame.Visible = false
+
+    dropdownFrame.Parent = comboBox
+
+    local selectionLabel = Instance.new("TextLabel")
+
+    selectionLabel.Name = "SelectionLabel"
+
+    selectionLabel.Text = ""
+
+    selectionLabel.Parent = comboBox
+
+    for _, option in ipairs(options) do
+
+        local optionButton = Instance.new("TextButton")
+
+        optionButton.Name = option
+
+        optionButton.Text = option
+
+        optionButton.Parent = dropdownFrame
+
+        optionButton.MouseButton1Click:Connect(function()
+
+            selectionLabel.Text = option
+
+            callback(option)
+
+            dropdownFrame.Visible = false
+
+        end)
+
+    end
+
+    comboBox.MouseButton1Click:Connect(function()
+
+        dropdownFrame.Visible = not dropdownFrame.Visible
+
+    end)
+
+    return comboBox
+
+end
+
+-- Function to create an on/off button
+
+function lib:AddOnOffButton(name, defaultState, callback)
+
+    local button = Instance.new("TextButton")
+
+    button.Name = name
+
+    button.Text = name
+
+    button.Parent = -- Specify the parent GUI frame here
+
+    local state = defaultState
+
+    button.TextColor3 = state and Color3.new(0, 1, 0) or Color3.new(1, 0, 0) -- Green for "on," red for "off"
+
+    button.MouseButton1Click:Connect(function()
+
+        state = not state
+
+        button.TextColor3 = state and Color3.new(0, 1, 0) or Color3.new(1, 0, 0)
+
+        callback(state)
+
+    end)
+
+    return button
+
+end
+
+-- Feel free to add more functions to the library based on your needs
+
+return lib
+
